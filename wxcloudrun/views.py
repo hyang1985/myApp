@@ -4,6 +4,7 @@ import logging
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.http import HttpResponse
+import hashlib
 from wxcloudrun.models import Counters
 
 
@@ -93,4 +94,15 @@ def update_count(request):
         
 
 def test(request):
-    return HttpResponse("Hello world ! ")
+    signature = request.GET.get("signature")
+    timestamp = request.GET.get("timestamp")
+    nonce = request.GET.get("nonce")
+    echostr = request.GET.get("echostr")
+    token = "hyang1985"
+    list = [token, timestamp, nonce]
+    list.sort()
+    sha1 = hashlib.sha1()
+    map(sha1.update, list)
+    hashcode = sha1.hexdigest()
+    if hashcode == signature:
+        return HttpResponse(echostr)
