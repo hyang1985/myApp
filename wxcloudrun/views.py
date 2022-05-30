@@ -2,7 +2,9 @@ import json
 import logging
 
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
+import hashlib
 from wxcloudrun.models import Counters
 
 
