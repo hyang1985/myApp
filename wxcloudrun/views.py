@@ -2,26 +2,24 @@ import json
 import logging
 
 from django.http import JsonResponse
-from django.http import HttpResponse
 from django.shortcuts import render
-import hashlib
 from wxcloudrun.models import Counters
 
 
 logger = logging.getLogger('log')
 
 
-def index(request):
+def index(request, _):
     """
     获取主页
 
      `` request `` 请求对象
     """
-    #return ""
+
     return render(request, 'index.html')
 
 
-def counter(request):
+def counter(request, _):
     """
     获取当前计数
 
@@ -30,7 +28,7 @@ def counter(request):
 
     rsp = JsonResponse({'code': 0, 'errorMsg': ''}, json_dumps_params={'ensure_ascii': False})
     if request.method == 'GET' or request.method == 'get':
-        rsp = str(get_count())+"haha"
+        rsp = get_count()
     elif request.method == 'POST' or request.method == 'post':
         rsp = update_count(request)
     else:
@@ -91,22 +89,3 @@ def update_count(request):
     else:
         return JsonResponse({'code': -1, 'errorMsg': 'action参数错误'},
                     json_dumps_params={'ensure_ascii': False})
-
-def hello(request):
-    signature = request.GET.get("signature")
-    timestamp = request.GET.get("timestamp")
-    nonce = request.GET.get("nonce")
-    echostr = request.GET.get("echostr")
-    token = "hyang1985"
-    list = [token, timestamp, nonce]
-    list.sort()
-    sha1 = hashlib.sha1()
-    map(sha1.update, list)
-    hashcode = sha1.hexdigest()
-    if hashcode == signature:
-        return HttpResponse(echostr)
-    else:
-        return HttpResponse("error")
-    
-def test(request):
-    return HttpResponse("test")
