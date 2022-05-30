@@ -107,3 +107,6 @@ def hello(request):
         return HttpResponse(echostr)
     else:
         return HttpResponse("error")
+    
+def test(request):
+    return HttpResponse("test")
