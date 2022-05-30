@@ -3,6 +3,7 @@ import logging
 
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.http import HttpResponse
 from wxcloudrun.models import Counters
 
 
@@ -89,3 +90,7 @@ def update_count(request):
     else:
         return JsonResponse({'code': -1, 'errorMsg': 'action参数错误'},
                     json_dumps_params={'ensure_ascii': False})
+        
+
+def test(request):
+    return HttpResponse("Hello world ! ")
