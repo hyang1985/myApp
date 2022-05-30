@@ -106,4 +106,4 @@ def hello(request):
     if hashcode == signature:
         return HttpResponse(echostr)
     else:
-        return ""
+        return HttpResponse("error")
