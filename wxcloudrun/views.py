@@ -94,7 +94,6 @@ def update_count(request):
         
 
 def test(request):
-<<<<<<< HEAD
     try:
         signature = request.GET.get("signature")
         timestamp = request.GET.get("timestamp")
@@ -107,20 +106,6 @@ def test(request):
         map(sha1.update, list)
         hashcode = sha1.hexdigest()
         if hashcode == signature:
-            return HttpResponse(echostr, content_type='text/plain')
+            return HttpResponse(echostr)
     except:
         return HttpResponse("wrong")
-=======
-    signature = request.GET.get("signature")
-    timestamp = request.GET.get("timestamp")
-    nonce = request.GET.get("nonce")
-    echostr = request.GET.get("echostr")
-    token = "hyang1985"
-    list = [token, timestamp, nonce]
-    list.sort()
-    sha1 = hashlib.sha1()
-    map(sha1.update, list)
-    hashcode = sha1.hexdigest()
-    if hashcode == signature:
-        return HttpResponse(echostr)
->>>>>>> parent of fff9b51 (Update views.py)
