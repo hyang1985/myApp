@@ -106,6 +106,6 @@ def test(request):
         map(sha1.update, list)
         hashcode = sha1.hexdigest()
         if hashcode == signature:
-            return HttpResponse(echostr)
+            return HttpResponse(echostr, content_type='text/plain')
     except:
         return HttpResponse("wrong")
