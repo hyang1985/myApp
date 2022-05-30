@@ -28,7 +28,7 @@ def counter(request, _):
 
     rsp = JsonResponse({'code': 0, 'errorMsg': ''}, json_dumps_params={'ensure_ascii': False})
     if request.method == 'GET' or request.method == 'get':
-        rsp = get_count()
+        rsp = get_count()+100
     elif request.method == 'POST' or request.method == 'post':
         rsp = update_count(request)
     else:
