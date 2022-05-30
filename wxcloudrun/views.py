@@ -17,8 +17,8 @@ def index(request, _):
 
      `` request `` 请求对象
     """
-    return ""
-    #return render(request, 'index.html')
+    #return ""
+    return render(request, 'index.html')
 
 
 def counter(request, _):
