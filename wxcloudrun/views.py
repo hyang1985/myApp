@@ -11,7 +11,7 @@ from wxcloudrun.models import Counters
 logger = logging.getLogger('log')
 
 
-def index(request, _):
+def index(request):
     """
     获取主页
 
@@ -21,7 +21,7 @@ def index(request, _):
     return render(request, 'index.html')
 
 
-def counter(request, _):
+def counter(request):
     """
     获取当前计数
 
