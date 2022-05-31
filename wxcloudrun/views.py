@@ -10,7 +10,29 @@ from wxcloudrun.models import Counters
 
 
 logger = logging.getLogger('log')
+@csrf_exempt
 
+def test(request):
+    if request.method == "GET":
+        #接收微信服务器get请求发过来的参数
+        signature = request.GET.get('signature', None)
+        timestamp = request.GET.get('timestamp', None)
+        nonce = request.GET.get('nonce', None)
+        echostr = request.GET.get('echostr', None)
+        #服务器配置中的token
+        token = '写你的token在这里'
+        #把参数放到list中排序后合成一个字符串，再用sha1加密得到新的字符串与微信发来的signature对比，如果相同就返回echostr给服务器，校验通过
+        hashlist = [token, timestamp, nonce]
+        hashlist.sort()
+        hashstr = ''.join([s for s in hashlist])
+        hashstr = hashlib.sha1(hashstr).hexdigest()
+        if hashstr == signature:
+          return HttpResponse(echostr)
+        else:
+          return HttpResponse("field")
+    else:
+        othercontent = autoreply(request)
+        return HttpResponse(othercontent)
 
 def index(request, _):
     """
@@ -94,23 +116,22 @@ def update_count(request):
                     json_dumps_params={'ensure_ascii': False})
         
 
-@csrf_exempt
-def test(request):
-    try:
-        signature = request.GET.get("signature")
-        timestamp = request.GET.get("timestamp")
-        nonce = request.GET.get("nonce")
-        echostr = request.GET.get("echostr")
-        token = "hyang1985"
-        list = [token, timestamp, nonce]
-        list.sort()
-        sha1 = hashlib.sha1()
-        map(sha1.update, list)
-        hashcode = sha1.hexdigest()
-        if hashcode == signature:
-            return HttpResponse(echostr)
-    except:
-        return HttpResponse("wrong")
+# def test(request):
+#     try:
+#         signature = request.GET.get("signature")
+#         timestamp = request.GET.get("timestamp")
+#         nonce = request.GET.get("nonce")
+#         echostr = request.GET.get("echostr")
+#         token = "hyang1985"
+#         list = [token, timestamp, nonce]
+#         list.sort()
+#         sha1 = hashlib.sha1()
+#         map(sha1.update, list)
+#         hashcode = sha1.hexdigest()
+#         if hashcode == signature:
+#             return HttpResponse(echostr)
+#     except:
+#         return HttpResponse("wrong")
     
 import xml.etree.ElementTree as ET
 def autoreply(request):
