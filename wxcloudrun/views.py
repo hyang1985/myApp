@@ -110,3 +110,56 @@ def test(request):
             return HttpResponse(echostr)
     except:
         return HttpResponse("wrong")
+    
+import xml.etree.ElementTree as ET
+def autoreply(request):
+    try:
+        webData = request.body
+        xmlData = ET.fromstring(webData)
+
+        msg_type = xmlData.find('MsgType').text
+        ToUserName = xmlData.find('ToUserName').text
+        FromUserName = xmlData.find('FromUserName').text
+        CreateTime = xmlData.find('CreateTime').text
+        MsgType = xmlData.find('MsgType').text
+        MsgId = xmlData.find('MsgId').text
+
+        toUser = FromUserName
+        fromUser = ToUserName
+
+        if msg_type == 'text':
+            content = "您好,欢迎来到Python大学习!希望我们可以一起进步!"
+            replyMsg = TextMsg(toUser, fromUser, content)
+            print "成功了!!!!!!!!!!!!!!!!!!!"
+            print replyMsg
+            return replyMsg.send()
+
+        elif msg_type == 'image':
+            content = "图片已收到,谢谢"
+            replyMsg = TextMsg(toUser, fromUser, content)
+            return replyMsg.send()
+        elif msg_type == 'voice':
+            content = "语音已收到,谢谢"
+            replyMsg = TextMsg(toUser, fromUser, content)
+            return replyMsg.send()
+        elif msg_type == 'video':
+            content = "视频已收到,谢谢"
+            replyMsg = TextMsg(toUser, fromUser, content)
+            return replyMsg.send()
+        elif msg_type == 'shortvideo':
+            content = "小视频已收到,谢谢"
+            replyMsg = TextMsg(toUser, fromUser, content)
+            return replyMsg.send()
+        elif msg_type == 'location':
+            content = "位置已收到,谢谢"
+            replyMsg = TextMsg(toUser, fromUser, content)
+            return replyMsg.send()
+        else:
+            msg_type == 'link'
+            content = "链接已收到,谢谢"
+            replyMsg = TextMsg(toUser, fromUser, content)
+            return replyMsg.send()
+
+    except:
+        #replyMsg = TextMsg(toUser, fromUser, content)
+        return 
