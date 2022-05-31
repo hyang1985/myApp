@@ -93,6 +93,7 @@ def update_count(request):
                     json_dumps_params={'ensure_ascii': False})
         
 
+@csrf_exempt
 def test(request):
     try:
         signature = request.GET.get("signature")
